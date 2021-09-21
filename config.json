@@ -1,0 +1,105 @@
+{
+
+    //指定仓库的位置
+    "repository" : "./test",
+  "git": {
+    /*
+            指定推送到git上的信息
+        */
+    "address": "https://github.com/wzhone/AutoBackup.git",
+
+    /*
+      这三个参数用于初始化新的仓库
+    */
+    "name": "wzhone",
+    "email": "i@wzh.one",
+    "password": "XXXXXXXXXXXXXXXX"
+  },
+    "database" : {
+        //数据库主机名
+        "host" : "127.0.0.1",
+
+        //数据库用户名
+        "user":"root",
+
+        //数据库密码
+        "password" : "root",
+    },
+
+    //上传过程中需要忽视的文件（.gitignore）
+    "ignore" : [ 
+        ".bak"
+    ],
+
+    "tasks" : {
+
+        // 此处指定备份的名字，必须制定名字
+        "vlc" : { 
+            /*
+                调用钩子，用于表明在什么时候被调用
+                可以是以下值
+                once        在每次重置仓库的时候调用
+                everytime   每次执行备份的时候都会调用
+            */
+            "hook" : "once",
+
+            /*
+                备份类型。可以为以下值
+                file       备份文件
+                database   备份数据库
+                docker     备份docker项目文件
+            */
+            "type" : "file",
+
+            // data是给上文的type服务的
+            "data" :{ 
+                "source" : "/temp/folder",
+
+                //需要忽视的文件（仅限当前备份任务）
+                "ignore" : [ 
+                
+                ]
+            },
+
+            /*
+                执行备份前后的钩子事件
+            */
+            "beforHook" : [
+            ],
+
+            //如果data.source为空，这个可是不执行的哦
+            "afterHook" : [
+            ]
+
+        },
+        "task_b" : {
+            "hook" : "everytime" ,
+            "type" : "database",
+            
+
+            // data是给上文的type服务的
+            "data" :{ 
+
+                //数据库名字
+                "dbname" : "db",
+
+                //白名单还是黑名单
+                "whitelist" : false,
+
+                //数据表。由黑白名单决定
+                "tables" : ["myignore",""]
+
+            },
+            "beforHook" : [
+
+            ],
+            "afterHook" : [
+
+            ]
+        }
+
+    }
+
+
+
+}
