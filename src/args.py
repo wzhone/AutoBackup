@@ -7,7 +7,7 @@ from common import getAttr
 class Args:
     def __init__(self) -> None:
         parser = argparse.ArgumentParser(
-            description='自动备份 V2.0.1 Alpha',
+            description='自动备份 V2.0.1 Beta',
             epilog='不做完整性测试的备份不如不备份')
         parser.add_argument('mode',metavar='mode',help = "需要指定模式 backup/clean/status")
         parser.add_argument('-c','--config',dest = "config",help = "配置文件")

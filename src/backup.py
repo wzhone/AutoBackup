@@ -81,11 +81,10 @@ def backup():
 
     # 执行备份
     for obj in taskObjs:
-        G.log.message("执行备份[%s]" % obj.name)
+        G.log.message("执行备份任务 [%s]" % obj.name)
         obj.before()
         obj.run()
         obj.after()
-
 
     # 检查文件大小，避免推送失败
     filesize = getAllFileSize()

@@ -64,7 +64,7 @@ def matchWildcard(wild,tables):
 # 根据 所有表名单 和 匹配名单 计算匹配的表
 def matchTable(alltables,tables,dbname):
     if "*" in tables: return alltables
-    
+
     target = []
     for table in tables:
         hasStar = ((table.find('*') != -1) or (table.find('?') != -1))
@@ -129,8 +129,7 @@ def backup(task):
         G.log.warn("数据库 [%s]备份任务： 需要备份的数据表为空" % dbname)
         return False
 
-    G.log.message("备份数据库 [%s]" % dbname)
-    G.log.debug("备份数据表 [%s]" % ','.join(target_table))
+    G.log.debug("备份数据库表 [%s]" % ','.join(target_table))
 
 
     # 逐个生成备份文件
