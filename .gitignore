@@ -1,1 +1,5 @@
 online.json
+build
+dist
+__pycache__
+*.spec

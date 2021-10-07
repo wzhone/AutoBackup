@@ -11,7 +11,27 @@
 
 后期版本功能：
 
-1. 自动部署
-3. 系统内置执行的错误输出问题
-4. 用户命令执行逻辑
-5. 自动更新
+
+
+2. 系统内置执行的错误输出问题
+3. 用户命令执行逻辑
+3. 自动更新
+
+   
+
+
+
+### 依赖包
+
+```bash
+pip3 install argparse
+pip3 install pymysql
+pip3 install JsonComment
+pip3 install gitpython
+```
+
+
+
+### 支持的平台
+
+当前仅支持`Linux`

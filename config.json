@@ -1,105 +1,99 @@
 {
-
     //指定仓库的位置
-    "repository" : "./test",
-  "git": {
-    /*
+    "repository": "./test",
+    "git": {
+        /*
             指定推送到git上的信息
         */
-    "address": "https://github.com/wzhone/AutoBackup.git",
-
-    /*
-      这三个参数用于初始化新的仓库
-    */
-    "name": "wzhone",
-    "email": "i@wzh.one",
-    "password": "XXXXXXXXXXXXXXXX"
-  },
-    "database" : {
-        //数据库主机名
-        "host" : "127.0.0.1",
-
-        //数据库用户名
-        "user":"root",
-
-        //数据库密码
-        "password" : "root",
+        "address": "https://github.com/wzhone/AutoBackup.git",
+        
+        /*
+            这三个参数用于初始化新的仓库
+            要替换成你自己的信息
+        */
+        "name": "wzhone",
+        "email": "i@wzh.one",
+        "password": "XXXXXXXXXXXXXXXX"
     },
-
-    //上传过程中需要忽视的文件（.gitignore）
-    "ignore" : [ 
+    "database": {
+        //数据库主机名
+        "host": "127.0.0.1",
+        //数据库用户名
+        "user": "root",
+        //数据库密码
+        "password": "root"
+    },
+    //上传过程中需要忽视的文件（.gitignore）,该选项是可选的
+    "ignore": [
         ".bak"
     ],
-
-    "tasks" : {
-
+    "tasks": {
         // 此处指定备份的名字，必须制定名字
-        "vlc" : { 
+        "task_a": {
             /*
                 调用钩子，用于表明在什么时候被调用
                 可以是以下值
                 once        在每次重置仓库的时候调用
                 everytime   每次执行备份的时候都会调用
+                缺省指为 everytime
             */
-            "hook" : "once",
-
+            "hook": "once",
             /*
                 备份类型。可以为以下值
                 file       备份文件
                 database   备份数据库
                 docker     备份docker项目文件
             */
-            "type" : "file",
-
+            "type": "file",
             // data是给上文的type服务的
-            "data" :{ 
-                "source" : "/temp/folder",
-
-                //需要忽视的文件（仅限当前备份任务）
-                "ignore" : [ 
-                
-                ]
+            "data": {
+                "source": "/temp/folder",
+                //需要忽视的文件（仅限当前备份任务,全字匹配，不支持通配符）
+                "ignore": []
             },
-
             /*
                 执行备份前后的钩子事件
+                如果其中一条beforHook，执行失败
+                将停止这个备份项目的接下来的所有操作
             */
-            "beforHook" : [
-            ],
+            "beforHook": [],
 
-            //如果data.source为空，这个可是不执行的哦
-            "afterHook" : [
-            ]
-
+            /*
+                如果data.source为空，这个可是不执行的哦
+            */
+            "afterHook": []
         },
-        "task_b" : {
-            "hook" : "everytime" ,
-            "type" : "database",
-            
-
+        "task_b": {
+            "hook": "everytime",
+            "type": "database",
             // data是给上文的type服务的
-            "data" :{ 
-
+            "data": {
                 //数据库名字
-                "dbname" : "db",
+                "dbname": "db",
 
-                //白名单还是黑名单
-                "whitelist" : false,
+                /* 
+                    在这里指明需要备份的表
+                    可以使用通配符 
+                        * - 代表匹配一个或多个字符
+                        ? - 代表匹配一个字符
+                */
+                "tables": [
+                    "myignore",
+                    ""
+                ],
 
-                //数据表。由黑白名单决定
-                "tables" : ["myignore",""]
+                /*
+                    不备份的表
+                    优先级高于 tables 属性
+                    仅限当前备份任务,全字匹配，不支持通配符
+                */
+                "ignore": [
 
+
+                ]
             },
-            "beforHook" : [
-
-            ],
-            "afterHook" : [
-
-            ]
+            "beforHook": [],
+            "afterHook": []
         }
-
     }
-
-
-
 }
