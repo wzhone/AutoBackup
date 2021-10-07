@@ -13,7 +13,7 @@ def getAllDBTables(db_name):
     try:
         global AllTableData
         if not AllTableData is None:
-            return AllTableData[db_name]
+            return AllTableData[db_name].copy()
 
         host = G.database_info["host"]
         user = G.database_info["user"]
@@ -64,7 +64,7 @@ def matchWildcard(wild,tables):
 # 根据 所有表名单 和 匹配名单 计算匹配的表
 def matchTable(alltables,tables,dbname):
     if "*" in tables: return alltables
-
+    
     target = []
     for table in tables:
         hasStar = ((table.find('*') != -1) or (table.find('?') != -1))

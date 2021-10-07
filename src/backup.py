@@ -98,7 +98,7 @@ def backup():
 
 
     # 添加并提交
-    G.log.debug("添加增加的文件")
+    G.log.debug("添加增加的文件(git add -A)")
     repo.git.add("-A")
     if G.FORCECOMMIT or repo.is_dirty():
         commit_info = "%s" % G.log.now()

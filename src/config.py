@@ -36,13 +36,13 @@ class Config:
         return data
 
     def query(self,query,default):
-        warn = "配置文件缺少 (%s)，使用缺省值 (%s)" % (query,default)
+        debugmsg = "配置文件缺少 (%s)，使用缺省值 (%s)" % (query,default)
         list = query.split('.')
         data = self.data
         for i in list:
             if i not in data:
                 if (G.DEBUG): # 因为参数可选，所以仅限DEBUG才输出
-                    G.log.message(warn)
+                    G.log.debug(debugmsg)
                 return default
             else:
                 data = data[i]
