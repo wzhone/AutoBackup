@@ -26,11 +26,24 @@ def getRelativePath(path,root):
         return
     return root[slen:]
 
+def checksize(file):
+    size = os.path.getsize(file)
+    if size > 98 * 1024 * 1024:
+        G.log.warn("因为文件大于95MB而忽略复制 [%s]" % file)
+        return False
+    else:
+        return True
+
 def copy_file(source,dest):
     dirn = dirname(dest)
     if not exists(dirn):
         os.makedirs(dirn)
-    copy2(source,dest)
+    if checksize(source):
+        copy2(source,dest)
+        return True
+
+    return False
+
 
 
 # 备份文件
@@ -59,12 +72,13 @@ def backup(task):
                     dtime = os.stat(destfile).st_mtime
                     if stime > dtime:
                         # 替换文件
-                        copy2(sourcefile,destfile)
-                        copyf += 1
+                        if checksize(sourcefile):
+                            copy2(sourcefile,destfile)
+                            copyf += 1
             else:
                 # 创建这个文件并复制过去
-                copy_file(sourcefile,destfile)
-                copyf += 1
+                if copy_file(sourcefile,destfile):
+                    copyf += 1
             
             dealpath.append(destfile)
     

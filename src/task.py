@@ -37,7 +37,7 @@ class Task:
             self.runfun = self._backupfile
         elif tasktype == "database":
             self.runfun = self._backupdb
-            self.afterHook.append("sed -i '$d' *.sql") # 删除最后一行
+            self.afterHook.insert(0,"sed -i '$d' *.sql") # 删除最后一行
         else:
             G.log.warn("不支持的类型 Task:[%s] Type:[%s]" % (name,tasktype))
             self.runable = False
