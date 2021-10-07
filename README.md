@@ -4,20 +4,9 @@
 
 `v2` 初版于 `2021.9.20` 完成
 
-部署注意：
+`v2.0.1 Alpha`  `2021.10.7`
 
-1. 要注意测试备份有效性测试！
-2. 刚部署上的时候要多注意备份的内容，以免出幺蛾子。
-
-后期版本功能：
-
-
-
-2. 系统内置执行的错误输出问题
-3. 用户命令执行逻辑
-3. 自动更新
-
-   
+**要注意测试备份有效性测试！**
 
 
 
@@ -30,7 +19,15 @@ pip3 install JsonComment
 pip3 install gitpython
 ```
 
+### 打包方式
 
+```
+git clone https://github.com/wzhone/AutoBackup.git
+cd AutoBackup/src
+pyinstaller -F backup.py
+cd dist
+./backup -v
+```
 
 ### 支持的平台
 

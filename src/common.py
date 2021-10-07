@@ -17,15 +17,15 @@ def getAttr(data,key,default):
 
 class SingleGlobal():
     def __init__(self):
+        path = os.path.dirname(os.path.realpath(sys.argv[0]))
         data = {
             "DEBUG" : False,
             "isFirst" : False,
             "FORCECOMMIT" : False,
             "NOLOG" : False,
-            "filepath" : sys.path[0]
+            "filepath" : path
         }
         self.__dict__["data"] = data
-        
 
 
     def __getattr__(self, name):
