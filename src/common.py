@@ -23,7 +23,8 @@ class SingleGlobal():
             "isFirst" : False,
             "FORCECOMMIT" : False,
             "NOLOG" : False,
-            "filepath" : path
+            "filepath" : path,
+            "version" : "2.0.1"
         }
         self.__dict__["data"] = data
 

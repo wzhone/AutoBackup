@@ -194,8 +194,7 @@ def lockFile():
     if os.path.exists(lock):
         with open(lock,"r") as f:
             c = f.read()
-            G.log.error("其他程序正在运行 PID: %s" % c)
-            return False
+            return c
     else:
         with open(lock,"w") as f:
             c = f.write("%s" % os.getppid())
@@ -245,9 +244,11 @@ def main():
 
 
     # 锁定文件
-    if lockFile():
+    ret = lockFile()
+    if ret is True:
         G.log.debug("备份程序开始 PID:[%s]" % os.getppid())
     else:
+        G.log.error("其他程序正在运行 PID: %s" % ret)
         return
 
     try:                
@@ -267,14 +268,15 @@ def main():
             backup()
         else:
             G.log.error("不支持的模式 (%s)" % mode)
+        
+        G.log.message("备份程序结束 PID:[%s]" % os.getppid())
     except SystemExit as e:
         pass
     except git.exc.GitCommandError as e:
         G.log.error("GIT命令执行出错! : %s" % e)
     finally:    
-        # 结束任务
-        G.log.message("备份程序结束 PID:[%s]" % os.getppid())
         unlockFile()
+
 
 if __name__ == "__main__":
     main()

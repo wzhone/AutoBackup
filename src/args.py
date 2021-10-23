@@ -7,12 +7,13 @@ from common import getAttr
 class Args:
     def __init__(self) -> None:
         parser = argparse.ArgumentParser(
-            description='自动备份 V2.0.1 Beta',
+            description='自动备份',
             epilog='不做完整性测试的备份不如不备份')
         parser.add_argument('mode',metavar='mode',help = "需要指定模式 backup/clean/status")
         parser.add_argument('-c','--config',dest = "config",help = "配置文件")
         parser.add_argument('-d','--debug',dest = "debug",help = "调试模式",action="store_true")
         parser.add_argument('-f','--force',dest = "force",help = "强制Commit",action="store_true")
+        parser.add_argument('-v','--version',help = "输出版本信息",action='version',version='AutoBackup v%s' % G.version)
         args = parser.parse_args()
 
         self.parser = parser
