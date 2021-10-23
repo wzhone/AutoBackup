@@ -4,11 +4,6 @@ from os.path import join,exists,dirname
 from shutil import copy2
 from common import removeFile
 
-'''
-
-因为git的特殊性，被删除的文件就算是删了，也不会
-
-'''
 
 # 在路径最后增加一个斜线
 def addSlash(path):

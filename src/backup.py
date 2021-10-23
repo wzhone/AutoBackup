@@ -82,9 +82,13 @@ def backup():
     # 执行备份
     for obj in taskObjs:
         G.log.message("执行备份任务 [%s]" % obj.name)
+        G.log.push()
         obj.before()
         obj.run()
         obj.after()
+        
+        G.log.message("备份任务结束 [%s]" % obj.name)
+        G.log.pop()
 
     # 检查文件大小，避免推送失败
     filesize = getAllFileSize()
@@ -102,8 +106,9 @@ def backup():
     if G.FORCECOMMIT or repo.is_dirty():
         commit_info = "%s" % G.log.now()
         repo.git.commit("--allow-empty","-am","%s" % commit_info)
-        G.log.debug("向远程推送数据")
-        repo.git.push("-u","-f","backup_origin","master")
+        if not G.NOPUSH:
+            G.log.debug("向远程推送数据")
+            repo.git.push("-u","-f","backup_origin","master")
     else:
         G.log.message("无数据更新")
 
@@ -210,8 +215,6 @@ def unlockFile():
 def init():
 
 
-    # 初始化命令行
-    G.args = Args()
 
     # 初始化配置文件
     try:
@@ -239,14 +242,18 @@ def init():
 
 
 def main():
+
     # 初始化日志
     G.log = Logger("/tmp/autobackup.log")
 
+    # 初始化命令行
+    G.args = Args()
 
     # 锁定文件
     ret = lockFile()
     if ret is True:
-        G.log.debug("备份程序开始 PID:[%s]" % os.getppid())
+        G.log.message("备份程序开始 PID:[%s]" % os.getppid())
+        G.log.push()
     else:
         G.log.error("其他程序正在运行 PID: %s" % ret)
         return
@@ -269,11 +276,14 @@ def main():
         else:
             G.log.error("不支持的模式 (%s)" % mode)
         
+        
         G.log.message("备份程序结束 PID:[%s]" % os.getppid())
+        G.log.pop()
     except SystemExit as e:
         pass
     except git.exc.GitCommandError as e:
         G.log.error("GIT命令执行出错! : %s" % e)
+        G.log.pop()
     finally:    
         unlockFile()
 

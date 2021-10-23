@@ -24,10 +24,10 @@ class SingleGlobal():
             "FORCECOMMIT" : False,
             "NOLOG" : False,
             "filepath" : path,
-            "version" : "2.0.1"
+            "version" : "2.0.2 Alpha",
+            "NOPUSH" : False
         }
         self.__dict__["data"] = data
-
 
     def __getattr__(self, name):
         data = self.data
