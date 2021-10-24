@@ -6,6 +6,12 @@ else
 	BASE_DIR=`dirname $0`
 fi
 cd $BASE_DIR
+pip3 install argparse
+pip3 install pymysql
+pip3 install JsonComment
+pip3 install gitpython
+pip3 install pyinstaller
+
 
 # 编译备份系统
 echo "Compile the python project"
