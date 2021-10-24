@@ -1,4 +1,11 @@
 #!/bin/bash
+if [ -L $0 ]
+then
+	BASE_DIR=`dirname $(readlink $0)`
+else
+	BASE_DIR=`dirname $0`
+fi
+cd $BASE_DIR
 
 # 编译备份系统
 echo "Compile the python project"
@@ -10,8 +17,8 @@ cd ../test
 cp ../src/dist/backup ./
 
 if [[ $ret -ne 0 ]]; then 
-    echo "ERROR: Compile error";
-    exit 1
+	echo "ERROR: Compile error";
+	exit 1
 fi
 
 echo "--------------------"
@@ -28,9 +35,10 @@ echo "--------------------"
 
 # 第一次执行备份计划
 ./backup clean -c config.json -n -d
+ret=$?
 if [[ $ret -ne 0 ]]; then 
-    echo "ERROR: The first backup failed ";
-    exit 2
+	echo "ERROR: The first backup failed ";
+	exit 2
 fi
 
 mv ./data/.git ./git.tmp
@@ -42,9 +50,10 @@ rm -f data.1.tar
 
 # 第二次执行备份计划
 ./backup backup -c config.json -n -d
+ret=$?
 if [[ $ret -ne 0 ]]; then 
-    echo "ERROR: The second backup failed";
-    exit 3
+	echo "ERROR: The second backup failed";
+	exit 3
 fi
 mv ./data/.git ./git.tmp
 tar --mtime='UTC 2021-01-01' -cf data.2.tar ./data/
@@ -57,6 +66,7 @@ echo "--------------------"
 mysql -uroot -proot < ./bundle/clean.sql
 rm -rf /tmp/bundle
 rm -rf ./data
+rm -rf ./backup
 
 #echo $sha_1
 #echo $sha_2
