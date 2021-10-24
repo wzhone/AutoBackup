@@ -1,0 +1,59 @@
+{
+    "repository": "./data",
+    "git": {
+        "address": "https://github.com/wzhone/AutoBackup.git",
+        "name": "testname",
+        "email": "test@example.com",
+        "password": "XXXXXXXXXXXXXXXX"
+    },
+    "database": {
+        "host": "127.0.0.1",
+        "user": "root",
+        "password": "root"
+    },
+    "ignore": [
+        ".test.ignore"
+    ],
+    "tasks": {
+        "task_a": {
+            "hook": "once",
+            "type": "file",
+            "data": {
+                "source": "/tmp/bundle",
+                "ignore": []
+            },
+            "beforHook": [ ],
+            "afterHook": [ ]
+        },
+
+
+//DB Backup
+
+        "task_db_1": {
+            "hook": "everytime",
+            "type": "database",
+            "data": {
+                "dbname": "t1",
+                "tables": [
+                    "user?"
+                ],
+                "ignore": []
+            },
+            "beforHook": [ "echo 'd1' > info"],
+            "afterHook": [ "sed -i '1,20d' *.sql"]
+        },
+        "task_db_2": {
+            "hook": "everytime",
+            "type": "database",
+            "data": {
+                "dbname": "t2",
+                "tables": [
+                    "col*"
+                ],
+                "ignore": [ "cold2" ]
+            },
+            "beforHook": [ "echo 'd2' > info" ],
+            "afterHook": [ "sed -i '1,20d' *.sql"]
+        } 
+    }
+}
