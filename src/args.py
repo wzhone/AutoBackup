@@ -29,7 +29,8 @@ class Args:
             G.log.debug("开启强制Commit模式")
         
         G.NOPUSH = getAttr(args,"nopush",False)
-        G.log.message("本次不会提交到远程Github仓库")
+        if G.NOPUSH:
+            G.log.message("本次不会提交到远程Github仓库")
 
 
 
