@@ -58,9 +58,10 @@ def backup(task):
             destfile =  join(dest,getRelativePath(source,root),file)
             allfile += 1
 
-            # 跳过链接
-            if os.path.islink(sourcefile) == True: continue
-            
+            if not (os.path.isdir(sourcefile) or os.path.isfile(sourcefile)):
+                # 跳过 链接,设备,socket等复制可能会出问题的文件
+                continue
+
             if os.path.exists(destfile):
                 if os.path.isdir(destfile):
                     # 用户可能将之前的文件删了然后加上了同名文件夹
