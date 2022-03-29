@@ -1,0 +1,29 @@
+version: "2.1"
+
+backup:  
+  item1:  # 备份项
+
+    hook: "once"
+    # 备份类型。可以为以下值
+    #   file       备份文件
+    #   database   备份数据库
+    #   docker     备份docker项目文件
+
+    beforHook:  # 执行备份前的钩子事件，如果失败将停止这个备份项
+
+    afterHook: 
+
+    ignore: # 需要忽视的文件, 全字匹配，不支持通配符
+
+
+
+git: # 保存数据的git仓库
+  default:
+    address": "https://github.com/wzhone/AutoBackup.git",
+    name: "wzhone",                # 登录git的用户名
+    email: "i@wzh.one",            # 登录git的电子邮件
+    password: "XXXXXXXXXXXXXXXX"   # 用户名
+    repository: "./test"           # 指定仓库的位置
+    ignore:                        # .gitignore
+      - ".bak"
+  

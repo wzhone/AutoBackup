@@ -15,7 +15,6 @@
 ```bash
 pip3 install argparse
 pip3 install pymysql
-pip3 install JsonComment
 pip3 install gitpython
 ```
 
